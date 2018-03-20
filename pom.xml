@@ -104,16 +104,6 @@
 			<artifactId>ckez</artifactId>
 			<version>4.4.6.3</version>
 		</dependency>
-		<dependency>
-			<groupId>com.dmi.zkoss</groupId>
-			<artifactId>zk-ext</artifactId>
-			<version>8.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.dmi</groupId>
-			<artifactId>zk-max</artifactId>
-			<version>8.0.1</version>
-		</dependency>
 
 	</dependencies>
 
