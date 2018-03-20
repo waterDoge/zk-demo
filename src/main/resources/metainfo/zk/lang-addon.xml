@@ -1,0 +1,18 @@
+<language-addon>
+    <addon-name>test-addon</addon-name>
+    <version>1.0</version>
+    <language-name>xul/html</language-name>
+
+    <depends>zkmax</depends>
+    <component>
+        <component-name>help</component-name>
+        <extends>label</extends>
+        <property>
+            <property-name>zclass</property-name>
+            <property-value>help</property-value>
+        </property>
+    </component>
+    <stylesheet href="css/global.css" type="text/css"/>
+    <stylesheet href="bootstrap/css/bootstrap.css" type="text/css"/>
+    <javascript src="bootstrap/js/bootstrap.min.js"/>
+</language-addon>

@@ -1,0 +1,8 @@
+spring:
+  flyway:
+    enabled: false
+  datasource:
+    url: jdbc:mysql://192.168.0.201:3306/promotion?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: test
+    password: test!123#456
+    driver-class-name: com.mysql.jdbc.Driver

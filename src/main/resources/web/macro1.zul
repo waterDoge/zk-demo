@@ -1,0 +1,4 @@
+<?component name="helpmacro" macroURI="/~./macro/help.zul"?>
+<zk>
+    <helpmacro text="help macro"/>
+</zk>

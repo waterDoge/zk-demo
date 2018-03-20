@@ -1,0 +1,8 @@
+
+<?link href="/css/color-editor.css" rel="stylesheet" type="text/css"?>
+<?component name="color" macroURI="/~./macro/colorpicker.zul"?>
+<zk xmlns:n="native">
+    <color target="#result" attr="innerHTML,style.backgroundColor"/>
+    <colorbox/>
+    <n:span id="result"/>
+</zk>

@@ -1,0 +1,11 @@
+<div zclass="poster-editor" xmlns:ca="client/attribute" xmlns:n="native">
+    <div zclass="color-edit" ca:data-target="${arg.target}" ca:data-target-attr="${arg.attr}">
+        <div zclass="color-edit-alpha">
+            <n:input title="颜色" type="color" value="#ff8800"/>
+            <div ca:data-bound-left="-0.02" ca:data-bound-right="1.02"
+                 zclass="color-edit-handle movable-x"/>
+        </div>
+    </div>
+    <script type="javascript" src="/js/drag.js"/>
+    <script type="javascript" src="/js/color-editor.js"/>
+</div>

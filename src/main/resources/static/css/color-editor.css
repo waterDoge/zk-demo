@@ -1,0 +1,87 @@
+.color-edit {
+    position: relative;
+    margin-right: 10px;
+    width: 170px;
+    height: 24px;
+    /*border: 1px solid #aaccff;*/
+    line-height: 1;
+}
+
+.color-edit > * {
+    position: absolute;
+}
+
+.color-edit input[type=color] {
+    position: absolute;
+    left: 0;
+    width: 30px;
+    box-sizing: border-box;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    padding: 3px;
+    border-radius: 50%;
+    background-color: transparent;
+    /*display: none;*/
+    visibility: hidden;
+    z-index: -999;
+}
+
+.color-edit > .color-edit-alpha, .color-edit::before, .color-edit > .color-edit-alpha > .color-edit-handle {
+    height: 10px;
+    border-radius: 6px;
+}
+
+.color-edit > .color-edit-alpha, .color-edit::before {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+    width: calc(100% - 18px);
+    border: 1px solid #aaccff;
+}
+
+.color-edit > .color-edit-alpha {
+    background: transparent linear-gradient(90deg, transparent, #f80 97%);
+    background-clip: border-box;
+}
+
+.color-edit::before {
+    content: "";
+    background: linear-gradient(90deg, #ccc 6px, transparent 6px) top repeat-x, linear-gradient(90deg, transparent 6px, #ccc 6px) 0 6px repeat-x;
+    background-size: 12px 6px;
+}
+.color-edit:active > .color-edit-alpha{
+    z-index: 999;
+}
+.color-edit:active::after {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: transparent;
+    /*background-color: rgba(1, 125, 0, 1);*/
+}
+
+.color-edit::after {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.color-edit > .color-edit-alpha > .color-edit-handle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 10px;
+    border: 1px solid #aaccff;
+    background-color: #FFF;
+    transform: translateY(-50%);
+    z-index: 1000;
+}

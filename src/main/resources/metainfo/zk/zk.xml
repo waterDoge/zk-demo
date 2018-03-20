@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<config-name>zk-jar-app</config-name>
+	<!--<listener>-->
+		<!--<listener-class>com.hx.zkoss.ResourceURIInterceptor</listener-class>-->
+	<!--</listener>-->
+	<preference>
+		<name>org.zkoss.metainfo.zk.ui.WebApp.name</name>
+		<value>系统提示</value>
+	</preference>
+	<system-config>
+		<disable-event-thread>false</disable-event-thread>
+	</system-config>
+	<session-config>
+		<device-type>ajax</device-type>
+		<timeout-message>Session已经过期，请重新登录</timeout-message>
+	</session-config>
+	<error-page>
+		<exception-type>java.lang.IllegalArgumentException</exception-type>
+		<location>~./error/argsErr.zul</location>
+	</error-page>
+</zk>
