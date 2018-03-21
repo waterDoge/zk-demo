@@ -296,6 +296,7 @@
 
 - 纯页面文件（zul）实现的宏组件
   可以用于实现一些自定义展示效果， 比如给缩小显示的图片添加点击弹出100%大小的图片的效果、带样式tooltip。
+   
    ![https://github.com/waterDoge/zk-demo/blob/master/src/main/resources/static/img/tooltip.png?raw=true](src/main/resources/static/img/tooltip.png)
    
    1. 宏组件编写，与普通zul页面文件写法一样, 以下为实现上图效果的宏文件代码，文件路径web/macro/help.zul。
@@ -331,6 +332,7 @@
      可以通过给宏内部元素设置view model或composer来实现一些复杂逻辑，以内联的方式使用，在外部view model或composer中注入内部的元素，可以实现与外部元素的数据交互。
       
      以实现一个如下所示的带查询下拉选择组件为例
+     
      ![https://github.com/waterDoge/zk-demo/blob/master/src/main/resources/static/img/selector.png?raw=true](src/main/resources/static/img/selector.png)
       
       * 宏组件代码
@@ -625,5 +627,26 @@
         }
     ```
   
-  参考 [Composite Component](https://www.zkoss.org/wiki/ZK%20Developer's%20Reference/UI%20Composing/Composite%20Component)
+  参考 [ZK Developer's Reference：Composite Component](https://www.zkoss.org/wiki/ZK%20Developer's%20Reference/UI%20Composing/Composite%20Component)
   
+- 配置全局可用的自定义组件
+
+  如果多个页面都使用到了同一个自定义组件，每个页面都添加`<?component name="" class=""?>`可能会有些麻烦。我们可以通过配置lang-addon来设置全局可用的自定义组件
+  
+  1. 创建lang-addon.xml文件,目录同zk.xml。即对于打成war包的项目,目录为/WEB-INF/, 对于打成jar包的项目, 目录位于classpath:/metainfo/zk/
+  2. 内容, 插件名foo, 组件名bar, 类名foo.Foobar, 继承类label根据实际填写替换
+    ```xml
+    <language-addon>
+        <addon-name>foo</addon-name>
+        <version>1.0</version>
+        <language-name>xul/html</language-name>
+    
+        <component>
+            <component-name>bar</component-name>
+            <extends>label</extends>
+            <component-class>foo.Foobar</component-class>
+        </component>
+    </language-addon>
+    ```
+    
+    参考 [lang-addon](https://www.zkoss.org/wiki/ZK_Client-side_Reference/Language_Definition)
