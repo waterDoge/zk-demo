@@ -1,2 +1,7 @@
-<label tooltiptext="${arg.text}" value="?"
-       style="display: inline-block;height: 15px;width: 15px;background-color: orange;color:#fff;border-radius: 50%;font-size: 12px;font-weight:bold; line-height: 15px;cursor: help;text-align: center;"/>
+<zk>
+    <label value="?" tooltip="tooltip"
+           style="display: inline-block;height: 15px;width: 15px;border:1px solid var(--help-color);background-color: var(--tips-bg-color);color:var(--help-color);border-radius: 50%;font-size: 12px;font-weight:bold; line-height: 15px;cursor: help;text-align: center;"/>
+    <popup id="tooltip" style="transition: all .5s ease;">
+        <label value="${arg.text}"/>
+    </popup>
+</zk>
