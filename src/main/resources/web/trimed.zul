@@ -1,3 +1,5 @@
+<?component name="trimedtext" class="com.example.demo.zk.component.TrimedTextbox"?>
 <div viewModel="@id('vm') @init('com.example.demo.zk.vm.IndexVM')">
-    <textbox value="@bind(vm.foo)" trim="false" use="com.example.demo.zk.component.TrimedTextbox"/>
+    <!--<textbox value="@bind(vm.foo)" trim="false" use="com.example.demo.zk.component.TrimedTextbox"/>-->
+    <trimedtext value="@bind(vm.foo)" trim="true"/>
 </div>
