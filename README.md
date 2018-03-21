@@ -593,8 +593,9 @@
     }
     
     ```
-- 混合组件 Composite Component
-  
+混合组件 Composite Component
+-------------------------------
+
   该方式可避免扩展`HtmlMacroComponent`存在的缺点
   
   在扩展`HtmlMacroComponent`方式上作如下改动即可
@@ -629,8 +630,8 @@
   
   参考 [ZK Developer's Reference：Composite Component](https://www.zkoss.org/wiki/ZK%20Developer's%20Reference/UI%20Composing/Composite%20Component)
   
-- 配置全局可用的自定义组件
-
+配置全局可用的自定义组件
+----------------------------
   如果多个页面都使用到了同一个自定义组件，每个页面都添加`<?component name="" class=""?>`可能会有些麻烦。我们可以通过配置lang-addon来设置全局可用的自定义组件
   
   1. 创建lang-addon.xml文件,目录同zk.xml。即对于打成war包的项目,目录为/WEB-INF/, 对于打成jar包的项目, 目录位于classpath:/metainfo/zk/
@@ -650,9 +651,17 @@
     ```
     
     参考 [lang-addon](https://www.zkoss.org/wiki/ZK_Client-side_Reference/Language_Definition)
-- desktop, page, view    
-- MVC与MVVM
-- 常用工具类及注解
+
+
+desktop, page, view
+-------------------------
+
+MVC与MVVM
+------------------
+
+常用工具类及注解
+-----------------
+
     - SpringUtil
     - Executions
     - Selectors
@@ -668,7 +677,15 @@
     - @NotifyChange
     - @SmartNotifyChange
     - @NotifyCommand
-    
-- 通用CRUD
-- 异常处理
-- 通用表单提交限制
+
+通用CRUD
+--------------
+
+异常处理
+-------------
+
+通用表单提交限制
+---------------
+
+converter
+-------------
