@@ -650,3 +650,25 @@
     ```
     
     参考 [lang-addon](https://www.zkoss.org/wiki/ZK_Client-side_Reference/Language_Definition)
+- desktop, page, view    
+- MVC与MVVM
+- 常用工具类及注解
+    - SpringUtil
+    - Executions
+    - Selectors
+    - BindUtils
+    - @Init
+    - @AfterCompose
+    - @ContextParam
+    - @BindingParam
+    - @ExecutionArgParam
+    - @QueryParam
+    - @Command
+    - @GlobalCommand
+    - @NotifyChange
+    - @SmartNotifyChange
+    - @NotifyCommand
+    
+- 通用CRUD
+- 异常处理
+- 通用表单提交限制
