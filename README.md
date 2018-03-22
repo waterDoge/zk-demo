@@ -28,7 +28,7 @@
   - 添加一个自定义属性trim，值为true时去掉两端空白
    - java类
        
-    ```java
+   ```java
     public class TrimedTextbox extends Textbox {
         boolean trim = false;
     
@@ -46,15 +46,15 @@
             this.trim = trim;
         }
     }
-    ```
+   ```
         
    - 页面文件 
    
-    ```xml
+  ```xml
     <div viewModel="@id('vm') @init('com.example.demo.zk.vm.IndexVM')">
         <textbox value="@bind(vm.foo)" trim="true" use="com.example.demo.zk.component.TrimedTextbox"/>
     </div>
-    ```
+   ```
      
    - 以自定义组件的方式使用
    ```xml
@@ -67,7 +67,7 @@
    
      通过以上方式添加的自定义属性是不支持数据绑定的， 可以通过注解`@ComponentAnnotation({"propertyName1:@ZKBIND(ACCESS=both, SAVE_EVENT=eventName1)","propertyName2:@ZKBIND(ACCESS=both, SAVE_EVENT=eventName2)"})`添加双向绑定支持, 其中`propertyName1`、`propertyName2`为属性名，`eventName1`、`eventName2`为触发保存的事件名。
      
-     以一个扩展自`Bandbox`，实现带查询功能的下拉选择组件抽象类为例， 我们来看看如何实现自定义属性的双向数据绑定支持
+     以一个扩展自`Bandbox`，实现带查询功能的下拉选择组件抽象类为例
      
      1. 给java类添加注解,如
          ```java
@@ -637,7 +637,7 @@
   1. 创建lang-addon.xml文件,目录同zk.xml。即对于打成war包的项目,目录为/WEB-INF/, 对于打成jar包的项目, 目录位于classpath:/metainfo/zk/
   2. 内容, 插件名foo, 组件名bar, 类名foo.Foobar, 继承类label根据实际填写替换
   
-    ```xml
+   ```xml
         <language-addon>
             <addon-name>foo</addon-name>
             <version>1.0</version>
@@ -649,7 +649,7 @@
                 <component-class>foo.Foobar</component-class>
             </component>
         </language-addon>
-    ```
+   ```
     
    参考 [lang-addon](https://www.zkoss.org/wiki/ZK_Client-side_Reference/Language_Definition)
 
@@ -657,21 +657,21 @@
 常用工具类及注解
 -----------------
 
-    - SpringUtil
-    - Executions
-    - Selectors
-    - BindUtils
-    - @Init
-    - @AfterCompose
-    - @ContextParam
-    - @BindingParam
-    - @ExecutionArgParam
-    - @QueryParam
-    - @Command
-    - @GlobalCommand
-    - @NotifyChange
-    - @SmartNotifyChange
-    - @NotifyCommand
+- SpringUtil
+- Executions
+- Selectors
+- BindUtils
+- @Init
+- @AfterCompose
+- @ContextParam
+- @BindingParam
+- @ExecutionArgParam
+- @QueryParam
+- @Command
+- @GlobalCommand
+- @NotifyChange
+- @SmartNotifyChange
+- @NotifyCommand
 
 通用CRUD ViewModel
 --------------
