@@ -315,19 +315,19 @@
    2. 使用宏组件
    
     ```xml
-    <?component name="helpmacro" macroURI="/~./macro/help.zul"?>
-    <zk>
-     <!--  text属性对应宏中的${arg.text}，自定义的宏参数避免和org.zkoss.zk.ui.HtmlBasedComponent的属性冲突,如id, sclass等 -->
-        <helpmacro text="help macro"/>
-    </zk>
+	    <?component name="helpmacro" macroURI="/~./macro/help.zul"?>
+	    <zk>
+	     <!--  text属性对应宏中的${arg.text}，自定义的宏参数避免和org.zkoss.zk.ui.HtmlBasedComponent的属性冲突,如id, sclass等 -->
+		<helpmacro text="help macro"/>
+	    </zk>
     ```
      
      宏组件内部默认使用独立的ID空间，使用宏的页面上的元素使用的ID不会和宏内部的ID冲突。但外部也无法通过ID访问宏内部元素，也不能将宏内部元素注入到外部元素的view model或composer。使用内联宏可以通过ID访问内部元素或注入内部元素到外部view model/composer, 但没有独立的ID空间，使用时须小心ID冲突。
      
-		```xml
-		   <!--添加属性inline="true"即可声明为内联-->
-			<?component name="helpmacro" macroURI="/~./macro/help.zul" inline="true"?>
-		```
+	```xml
+		<!--添加属性inline="true"即可声明为内联-->
+		<?component name="helpmacro" macroURI="/~./macro/help.zul" inline="true"?>
+	```
 
      可以通过给宏内部元素设置view model或composer来实现一些复杂逻辑，以内联的方式使用，在外部view model或composer中注入内部的元素，可以实现与外部元素的数据交互。
       
