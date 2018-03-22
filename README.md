@@ -1,6 +1,4 @@
-<h1>zkoss组件扩展</h1>
-
-简要介绍
+zkoss简要介绍与组件扩展
 ==============
 
 zkoss是什么
@@ -120,27 +118,33 @@ web设计模式
 自定义属性的数据绑定支持
 --------------------------
    
-  通过以上方式添加的自定义属性是不支持数据绑定的， 可以通过注解`@ComponentAnnotation({"propertyName1:@ZKBIND(ACCESS=both, SAVE_EVENT=eventName1)","propertyName2:@ZKBIND(ACCESS=both, SAVE_EVENT=eventName2)"})`添加双向绑定支持, 其中`propertyName1`、`propertyName2`为属性名，`eventName1`、`eventName2`为触发保存的事件名。
+  通过以上方式添加的自定义属性是不支持数据绑定的， 可以通过注解
+
+  ```java
+    @ComponentAnnotation({"propertyName1:@ZKBIND(ACCESS=both, SAVE_EVENT=eventName1)"})
+  ```
+
+  添加双向绑定支持, 其中`propertyName1`为属性名，`eventName1`为触发保存的事件名。
      
   以一个扩展自`Bandbox`，实现带查询功能的下拉选择组件抽象类为例
      
   1. 给java类添加注解,如
   
-        ```java
-            //当Bandbox元素监听到onChange事件后，触发selectedItem和selectedId的保存动作。
-            @ComponentAnnotation({"selectedItem:@ZKBIND(ACCESS=both, SAVE_EVENT=onChange)","selectedId:@ZKBIND(ACCESS=both, SAVE_EVENT=onChange)"})
-            public abstract class SelectorBandbox<T> extends Bandbox implements IdSpace{
-             //...
-            }
-        ```
+  ```java
+        //当Bandbox元素监听到onChange事件后，触发selectedItem和selectedId的保存动作。
+        @ComponentAnnotation({"selectedItem:@ZKBIND(ACCESS=both, SAVE_EVENT=onChange)","selectedId:@ZKBIND(ACCESS=both, SAVE_EVENT=onChange)"})
+        public abstract class SelectorBandbox<T> extends Bandbox implements IdSpace{
+         //...
+        }
+  ```
 
   2. 在对应值产生变化的时候发布`onChange`事件(Post event)。 `Events.postEvent(Events.ON_CHANGE, this, selectedItem);`
         
-        **特别注意：setter内的事件发布前一定要判断新值与原值是否相同，否则可能会产生死循环。因为双向绑定时save完成后会自动load一次，调用组件的setter方法，如果此时不加判断直接再发布一个事件，则会导致再次save-load并陷入循环**
+  **特别注意：setter内的事件发布前一定要判断新值与原值是否相同，否则可能会产生死循环。因为双向绑定时save完成后会自动load一次，调用组件的setter方法，如果此时不加判断直接再发布一个事件，则会导致再次save-load并陷入循环**
      
-     完整代码
+  完整代码
      
-     ```java
+  ```java
         package com.hx.zkoss;
         
         import com.baomidou.mybatisplus.plugins.Page;
@@ -342,7 +346,7 @@ web设计模式
             }
         }
 
-     ```
+  ```
      
      
  _____________________________________________________
@@ -390,9 +394,9 @@ web设计模式
      
      ![https://github.com/waterDoge/zk-demo/blob/master/src/main/resources/static/img/selector.png?raw=true](https://github.com/waterDoge/zk-demo/blob/master/src/main/resources/static/img/selector.png?raw=true)
       
-    * 宏组件代码
+  * 宏组件代码
       
-    ```xml
+  ```xml
     <bandbox id="merchant" mold="rounded" autodrop="true"  placeholder="商户" tooltiptext="商户" readonly="true" viewModel="@id('vmu') @init('com.hx.zkoss.merchant.MerchQueryViewModel')">
         <custom-attributes role="developer"/>
         <bandpopup height="410px">
@@ -418,17 +422,18 @@ web设计模式
             <paging pageSize="10" onPaging="@command('query')"/>
         </bandpopup>
     </bandbox>
-    ```
+  ```
 
-    外部view model注入`id`为`users`的`listbox`，通过`listbox.getSelectedItem()`即可获取选中的实体对象。
+  外部view model注入`id`为`users`的`listbox`，通过`listbox.getSelectedItem()`即可获取选中的实体对象。
       
-    这种方式与纯java扩展相比，缺点是容易出现ID冲突，不够灵活，比如需要实现点击宏组件外部的一个按钮来重置宏组件里的内容，就需要在外部view model里再多注入一些对象，实现联级选择也比较麻烦；不能使用command和数据绑定之类的MVVM方式在宏组件内部与外部VM之间传递数据，此外，不能直接在宏上给bandbox设置诸如sclass, style, popup之类的属性。 优点是页面编写方式比较符合一般习惯， 不需要使用类似swing的编程方式。
+  这种方式与纯java扩展相比，缺点是容易出现ID冲突，不够灵活，比如需要实现点击宏组件外部的一个按钮来重置宏组件里的内容，就需要在外部view model里再多注入一些对象，实现联级选择也比较麻烦；不能使用command和数据绑定之类的MVVM方式在宏组件内部与外部VM之间传递数据，此外，不能直接在宏上给bandbox设置诸如sclass, style, popup之类的属性。 优点是页面编写方式比较符合一般习惯， 不需要使用类似swing的编程方式。
       
     
 扩展`HtmlMacroComponent`
 ---------------------------------------------- 
  
   * 页面文件`web/zkcomponent/selectorBandbox.zul`
+
     ```xml
         <bandbox id="bandbox" mold="rounded" autodrop="true" readonly="true">
             <bandpopup height="410px">
@@ -448,6 +453,7 @@ web设计模式
             </bandpopup>
         </bandbox>
     ```
+	
   * 抽象类,在纯java版的基础上，需要做这些改动
       - 改为继承`HtmlMacroComponent`
       - 添加`Bandbox`属性
@@ -455,7 +461,7 @@ web设计模式
       - 去掉创建和设置子元素的部分代码
       - 初始化块添加
       
-        ```java
+      ```java
             setStyle("display:inline-block"); //因为不再继承Bandbox，组件的最外层不再是Bandbox而是一个div，默认display为block会单独占一行
             setMacroURI("/~./zkcomponent/selectorBandbox.zul");//页面文件
             compose();//执行这个以注入子元素
@@ -464,7 +470,7 @@ web设计模式
             nameHeader.setLabel(nameHeaderName);//设置表头
             idHeader.setLabel(idHeaderName);//设置表头
             list.setItemRenderer(listRenderer());//设置Renderer
-        ```
+      ```
         
       - 原先在创建和设置子元素的方法中通过`addEventListener`添加的事件处理现在可以直接通过`@Listen`的方式添加在对应方法上
       - 原先调用的继承自bandbox的方法需要改为通过`banbox`属性调用

@@ -2,6 +2,5 @@
 <?component name="color" macroURI="/~./macro/colorpicker.zul"?>
 <zk xmlns:n="native">
     <color target="#result" attr="innerHTML,style.backgroundColor"/>
-    <colorbox/>
-    <n:span id="result"/>
+    <n:span id="result" style="position:fixed;top:0;bottom:0;left:100px;right:0;width:100vw;height:100vh;z-index:-999;text-align:center;pointer-event:none;"/>
 </zk>

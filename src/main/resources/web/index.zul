@@ -1,6 +1,6 @@
 <zk>
     <label value="hello world"/>
     <help tooltiptext="tips"/>
-    <label zclass="warning" tooltiptext="warning"/>
-    <label zclass="danger" tooltiptext="danger"/>
+    <label zclass="tips tips-warning" tooltiptext="warning"/>
+    <label zclass="tips tips-danger" tooltiptext="danger"/>
 </zk>

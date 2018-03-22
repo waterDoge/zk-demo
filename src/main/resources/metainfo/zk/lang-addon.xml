@@ -9,7 +9,7 @@
         <extends>label</extends>
         <property>
             <property-name>zclass</property-name>
-            <property-value>help</property-value>
+            <property-value>tips tips-help</property-value>
         </property>
     </component>
     <stylesheet href="css/global.css" type="text/css"/>
