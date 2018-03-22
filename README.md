@@ -654,7 +654,7 @@
    参考 [lang-addon](https://www.zkoss.org/wiki/ZK_Client-side_Reference/Language_Definition)
 
 
-常用工具类及注解
+实用工具类及注解
 -----------------
 
 - SpringUtil
@@ -667,9 +667,7 @@
 - @BindingParam
 - @ExecutionArgParam
 - @QueryParam
-- @Command
 - @GlobalCommand
-- @NotifyChange
 - @SmartNotifyChange
 - @NotifyCommand
 
