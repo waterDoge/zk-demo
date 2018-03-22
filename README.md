@@ -1,33 +1,84 @@
+<h1>zkoss组件扩展</h1>
+
+简要介绍
+==============
+
+zkoss是什么
+---------------
+
+> zkoss是一个基于 Java EE 与 AJAX 的UI框架，它提供上百个元件让你打造快速反应的网页应用的介面，
+  每个元件透过 AJAX 跟服务器沟通后，只更新部分画面，因此可以帶來类似于桌面应用的使用体验。
+  并可用 `xml` 语法来设计界面，既快速也易读。以支持事件驱动(event-driven)的方式编写应用程序逻辑，
+  简单易上手。
+
+为什么用 zkoss
+---------------------------
+> - 只懂java就能享受 AJAX 的优势
+>
+>  采用 ZK 最大优点就是 using AJAX without JavaScript 。整个开发过程中，
+   你都不需要了解浏览器和服务器透过 AJAX 沟通的细节 (连接、重送等)，
+   只要遵照开发模式编写必要的控制器类别 (controller) 即可。
+
+- 提供的丰富的组件可以满足大多场景，且保留了整合技术的可能性
+
+web设计模式
+--------------
+
+- MVC 模式
+  MVC 泛指把系统分成模型（Model）, 视图（View）, 控制器（Controller）三部分的架构。
+  zkoss借这个词来指 **直接通过元件的API来控制元件** 的设计模式。 
+  
+  在这个模式下，必须扩展`SelectorComposer`作为控制器，并将其全限定名作为视图的外层元素`apply`属性的值。
+  
+  该模式优点是简单易懂，但控制器易受页面改动影响
+  
+- MVVM模式
+  M(Model)与V(View)代表的意义与MVC中的相同，VM指ViewModel, 这种模式通过数据绑定来控制页面数据展示，
+  通过命令(command)来实现业务逻辑
+  
+  该模式不易受页面变化影响，与Controller相比, ViewModel的重用性更高
+
+
+组件扩展
+===============
+
 使用use属性扩展原有组件
 --------------
-  除<apply/>、<foreach/>等shadow element之外, zkoss的每个xul/html标签都有一个与之对应的Java类,Java类中有与标签的属性对应的getter/setter方法。我们可以通过继承并重写特定方法的方式，在设值和取值过程中添加一些处理逻辑，也可以添加getter/setter方法来增加自定义的xul标签属性。
+  除<apply/>、<foreach/>等shadow element之外, zkoss的每个xul/html标签都有一个与之对应的Java类,
+  Java类中有与标签的属性对应的getter/setter方法。我们可以通过继承并重写特定方法的方式，
+  在设值和取值过程中添加一些处理逻辑，也可以添加getter/setter方法来增加自定义的xul标签属性。
   
   实现一个自动去除两端空白的textbox
-   - java类
-   
-		```java
-		package com.example.demo.zk.component;
-		
-		import org.zkoss.zk.ui.WrongValueException;
-		import org.zkoss.zul.Textbox;
+  
+  - java类
 
-		public class TrimedTextbox extends Textbox {
-		    @Override
-		    public String getValue() throws WrongValueException {
-		        final String value = super.getValue();
-		        return value == null ? null : value.trim();
-		    }
-		}
-		```
-   - 页面文件 
-		```xml
-		<div viewModel="@id('vm') @init('com.example.demo.zk.vm.IndexVM')">
-		    <textbox value="@bind(vm.foo)" use="com.example.demo.zk.component.TrimedTextbox"/>
-		</div>
-		```
-  - 添加一个自定义属性trim，值为true时去掉两端空白
+    ```java
+        package com.example.demo.zk.component;
+        
+        import org.zkoss.zk.ui.WrongValueException;
+        import org.zkoss.zul.Textbox;
+        
+        public class TrimedTextbox extends Textbox {
+            @Override
+            public String getValue() throws WrongValueException {
+                final String value = super.getValue();
+                return value == null ? null : value.trim();
+            }
+        }
+    ```
+
+  - 页面文件 
+
+    ```xml
+        <div viewModel="@id('vm') @init('com.example.demo.zk.vm.IndexVM')">
+            <textbox value="@bind(vm.foo)" use="com.example.demo.zk.component.TrimedTextbox"/>
+        </div>
+    ```
+
+  自定义属性例子：添加一个自定义属性trim，值为true时去掉两端空白
+  
    - java类
-       
+
    ```java
     public class TrimedTextbox extends Textbox {
         boolean trim = false;
@@ -47,39 +98,43 @@
         }
     }
    ```
-        
-   - 页面文件 
-   
+
+   - 页面文件
+
   ```xml
     <div viewModel="@id('vm') @init('com.example.demo.zk.vm.IndexVM')">
         <textbox value="@bind(vm.foo)" trim="true" use="com.example.demo.zk.component.TrimedTextbox"/>
     </div>
    ```
-     
-   - 以自定义组件的方式使用
+
+作为自定义组件使用
+--------------------------
+
    ```xml
     <?component name="trimedtext" class="com.example.demo.zk.component.TrimedTextbox"?>
     <div viewModel="@id('vm') @init('com.example.demo.zk.vm.IndexVM')">
         <trimedtext value="@bind(vm.foo)" trim="true"/>
     </div>
    ```
-   - 自定义属性的数据绑定支持
    
-     通过以上方式添加的自定义属性是不支持数据绑定的， 可以通过注解`@ComponentAnnotation({"propertyName1:@ZKBIND(ACCESS=both, SAVE_EVENT=eventName1)","propertyName2:@ZKBIND(ACCESS=both, SAVE_EVENT=eventName2)"})`添加双向绑定支持, 其中`propertyName1`、`propertyName2`为属性名，`eventName1`、`eventName2`为触发保存的事件名。
+自定义属性的数据绑定支持
+--------------------------
+   
+  通过以上方式添加的自定义属性是不支持数据绑定的， 可以通过注解`@ComponentAnnotation({"propertyName1:@ZKBIND(ACCESS=both, SAVE_EVENT=eventName1)","propertyName2:@ZKBIND(ACCESS=both, SAVE_EVENT=eventName2)"})`添加双向绑定支持, 其中`propertyName1`、`propertyName2`为属性名，`eventName1`、`eventName2`为触发保存的事件名。
      
-     以一个扩展自`Bandbox`，实现带查询功能的下拉选择组件抽象类为例
+  以一个扩展自`Bandbox`，实现带查询功能的下拉选择组件抽象类为例
      
-     1. 给java类添加注解,如
-         ```java
+  1. 给java类添加注解,如
+  
+        ```java
+            //当Bandbox元素监听到onChange事件后，触发selectedItem和selectedId的保存动作。
             @ComponentAnnotation({"selectedItem:@ZKBIND(ACCESS=both, SAVE_EVENT=onChange)","selectedId:@ZKBIND(ACCESS=both, SAVE_EVENT=onChange)"})
             public abstract class SelectorBandbox<T> extends Bandbox implements IdSpace{
              //...
             }
-         ```
-     
-        当`Bandbox`元素监听到`onChange`事件后，触发`selectedItem`和`selectedId`的保存动作。
-        
-     2. 在对应值产生变化的时候发布`onchange`事件(Post event)。 `Events.postEvent(Events.ON_CHANGE, this, selectedItem);`
+        ```
+
+  2. 在对应值产生变化的时候发布`onChange`事件(Post event)。 `Events.postEvent(Events.ON_CHANGE, this, selectedItem);`
         
         **特别注意：setter内的事件发布前一定要判断新值与原值是否相同，否则可能会产生死循环。因为双向绑定时save完成后会自动load一次，调用组件的setter方法，如果此时不加判断直接再发布一个事件，则会导致再次save-load并陷入循环**
      
@@ -333,9 +388,9 @@
       
      以实现一个如下所示的带查询下拉选择组件为例
      
-     ![https://github.com/waterDoge/zk-demo/blob/master/src/main/resources/static/img/selector.png?raw=true](src/main/resources/static/img/selector.png)
+     ![https://github.com/waterDoge/zk-demo/blob/master/src/main/resources/static/img/selector.png?raw=true](https://github.com/waterDoge/zk-demo/blob/master/src/main/resources/static/img/selector.png?raw=true)
       
-      * 宏组件代码
+    * 宏组件代码
       
     ```xml
     <bandbox id="merchant" mold="rounded" autodrop="true"  placeholder="商户" tooltiptext="商户" readonly="true" viewModel="@id('vmu') @init('com.hx.zkoss.merchant.MerchQueryViewModel')">
@@ -370,9 +425,10 @@
     这种方式与纯java扩展相比，缺点是容易出现ID冲突，不够灵活，比如需要实现点击宏组件外部的一个按钮来重置宏组件里的内容，就需要在外部view model里再多注入一些对象，实现联级选择也比较麻烦；不能使用command和数据绑定之类的MVVM方式在宏组件内部与外部VM之间传递数据，此外，不能直接在宏上给bandbox设置诸如sclass, style, popup之类的属性。 优点是页面编写方式比较符合一般习惯， 不需要使用类似swing的编程方式。
       
     
-- 扩展`HtmlMacroComponent`以结合两者优点, 以之前的组件为例
-    
-    * 页面文件`web/zkcomponent/selectorBandbox.zul`
+扩展`HtmlMacroComponent`
+---------------------------------------------- 
+ 
+  * 页面文件`web/zkcomponent/selectorBandbox.zul`
     ```xml
         <bandbox id="bandbox" mold="rounded" autodrop="true" readonly="true">
             <bandpopup height="410px">
@@ -392,12 +448,13 @@
             </bandpopup>
         </bandbox>
     ```
-    * 抽象类,在纯java版的基础上，需要做这些改动
+  * 抽象类,在纯java版的基础上，需要做这些改动
       - 改为继承`HtmlMacroComponent`
-      - 添加Bandbox属性
+      - 添加`Bandbox`属性
       - 子元素添加`@Wire`注解
       - 去掉创建和设置子元素的部分代码
       - 初始化块添加
+      
         ```java
             setStyle("display:inline-block"); //因为不再继承Bandbox，组件的最外层不再是Bandbox而是一个div，默认display为block会单独占一行
             setMacroURI("/~./zkcomponent/selectorBandbox.zul");//页面文件
@@ -408,10 +465,11 @@
             idHeader.setLabel(idHeaderName);//设置表头
             list.setItemRenderer(listRenderer());//设置Renderer
         ```
-      - 原先在创建和设置子元素的方法中通过`addEventListener`添加的事件处理现在可以直接通过@isten的方式添加在对应方法上
-      - 原先调用的继承自bandbox的方法需要改为通过banbox属性调用
+        
+      - 原先在创建和设置子元素的方法中通过`addEventListener`添加的事件处理现在可以直接通过`@Listen`的方式添加在对应方法上
+      - 原先调用的继承自bandbox的方法需要改为通过`banbox`属性调用
     
-    这种方式的与纯java方式相比缺点是不能直接在宏上给bandbox设置诸如sclass, style, popup之类的属性。
+    这种方式的与纯java方式相比缺点是不能直接在宏上给`bandbox`设置诸如`sclass`, `style`, `popup`之类的属性。
       
     完整代码
     
@@ -593,6 +651,7 @@
     }
     
     ```
+    
 混合组件 Composite Component
 -------------------------------
 
@@ -656,7 +715,6 @@
 
 实用工具类及注解
 -----------------
-
 - SpringUtil
 - Executions
 - Selectors
@@ -670,15 +728,6 @@
 - @GlobalCommand
 - @SmartNotifyChange
 - @NotifyCommand
-
-通用CRUD ViewModel
---------------
-
-异常处理
--------------
-
-表单提交限制
----------------
 
 一些建议
 -------------
