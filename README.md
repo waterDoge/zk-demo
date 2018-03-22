@@ -636,28 +636,23 @@
   
   1. 创建lang-addon.xml文件,目录同zk.xml。即对于打成war包的项目,目录为/WEB-INF/, 对于打成jar包的项目, 目录位于classpath:/metainfo/zk/
   2. 内容, 插件名foo, 组件名bar, 类名foo.Foobar, 继承类label根据实际填写替换
+  
     ```xml
-    <language-addon>
-        <addon-name>foo</addon-name>
-        <version>1.0</version>
-        <language-name>xul/html</language-name>
-    
-        <component>
-            <component-name>bar</component-name>
-            <extends>label</extends>
-            <component-class>foo.Foobar</component-class>
-        </component>
-    </language-addon>
+        <language-addon>
+            <addon-name>foo</addon-name>
+            <version>1.0</version>
+            <language-name>xul/html</language-name>
+        
+            <component>
+                <component-name>bar</component-name>
+                <extends>label</extends>
+                <component-class>foo.Foobar</component-class>
+            </component>
+        </language-addon>
     ```
     
-    参考 [lang-addon](https://www.zkoss.org/wiki/ZK_Client-side_Reference/Language_Definition)
+   参考 [lang-addon](https://www.zkoss.org/wiki/ZK_Client-side_Reference/Language_Definition)
 
-
-desktop, page, view
--------------------------
-
-MVC与MVVM
-------------------
 
 常用工具类及注解
 -----------------
@@ -678,14 +673,45 @@ MVC与MVVM
     - @SmartNotifyChange
     - @NotifyCommand
 
-通用CRUD
+通用CRUD ViewModel
 --------------
 
 异常处理
 -------------
 
-通用表单提交限制
+表单提交限制
 ---------------
 
-converter
+一些建议
 -------------
+
+- 视图层根据需要选择取值方式，页面不可修改也不需要跟踪变化的数据使用`@init`或`EL`表达式, 页面可修改但不需要跟踪变化的使用`@save`, 页面不可修改但需要跟踪变化的使用`@load`。
+
+    <table>
+        <tr>    
+            <th></th>
+            <th>需要跟踪变化</th>
+            <th>不需要跟踪变化</th>
+        </tr>
+        <tr>
+            <td>可编辑</td>
+            <td>@bind</td>
+            <td>@save</td>
+        </tr>
+        <tr>
+            <td>不可编辑</td>
+            <td>@load</td>
+            <td>@init或EL</td>
+        </tr>
+    </table>
+    
+- `listbox`的`model`使用`ListModelList`对象可以避免每次更改数据都要重新渲染整个表，且不需要添加`notifyChange`, 调用其`add`, `addAll`, `remove`, `clear`等方法时对应更改会自动体现到视图上
+
+- 尽量避免在`ViewModel`使用`MVC`模式（注入视图层元素，使用@Listen）,以降低VM与视图层的耦合
+
+
+文档
+--------------------------
+  - [ZKOSS MVVM入门（繁体中文，一些术语看起来可能有些怪异）](https://hawkhero.gitbooks.io/zk-coach/content/)
+  - [ZK-MVVM-BOOK 很全面但是是英文的](http://books.zkoss.org/zk-mvvm-book/8.0/introduction_of_mvvm.html#)
+  - [ZK_Developer's_Reference](https://www.zkoss.org/wiki/ZK_Developer's_Reference)
